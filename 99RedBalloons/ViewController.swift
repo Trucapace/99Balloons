@@ -13,39 +13,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var balloonNumberLabel: UILabel!
     @IBOutlet weak var balloonIMage: UIImageView!
     
+    var balloonsArray:[Balloon] = []        //create array for Balloons starting empty
     var balloonIndex = 1                    //value for current diplayed balloon
-    var balloonsArray:[Balloon] = []    //create array for Balloons starting empty
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var randomNumber:Int                //random number for image generation
-       
-        
-        //Create balloons and add to array
-        for var x = 1; x < 100; x++ {
-          
-            var myBalloon = Balloon()       //Create instance of a ballon
-            myBalloon.number = x            //Assign number value to balloon
-            randomNumber = Int(arc4random_uniform(UInt32(4))) //Generate random number for random image assignement
-            
-            //Assign image based on random number
-            switch randomNumber {
-            case 0:
-                myBalloon.image = UIImage(named: "RedBalloon1.jpg")
-            case 1:
-                myBalloon.image = UIImage(named: "RedBalloon2.jpg")
-            case 2:
-                myBalloon.image = UIImage(named: "RedBalloon3.jpg")
-            case 3:
-                myBalloon.image = UIImage(named: "RedBalloon4.jpg")
-            default:
-                myBalloon.image = UIImage(named: "BerlinTVTower.jpg")
-            }
-            balloonsArray.append(myBalloon)  //Add instance of balloon to array
-        }
+        createBalloons()                    //create balloons from function
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,10 +37,29 @@ class ViewController: UIViewController {
         balloonNumberLabel.text = "\(balloonIndex) Balloon"
         balloonIMage.image = self.balloonsArray[balloonIndex].image
         
-        self.balloonIndex++
-        
-    
+        self.balloonIndex += 1
     }
 
+    func createBalloons () {
+        for var x = 1; x < 100; x++ {
+            var myBalloon = Balloon()       //Create instance of a ballon
+            myBalloon.number = x            //Assign number value to balloon
+            
+            let randomNumber = Int(arc4random_uniform(UInt32(4))) //Generate random number for random image assignement
+            
+            //Assign image based on random number
+            switch randomNumber {
+            case 0:
+                myBalloon.image = UIImage(named: "RedBalloon1.jpg")
+            case 1:
+                myBalloon.image = UIImage(named: "RedBalloon2.jpg")
+            case 2:
+                myBalloon.image = UIImage(named: "RedBalloon3.jpg")
+            default:
+                myBalloon.image = UIImage(named: "RedBalloon4.jpg")
+            }
+            self.balloonsArray.append(myBalloon)  //Add instance of balloon to array
+        }
+    }
 }
 
